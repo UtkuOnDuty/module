@@ -35,12 +35,12 @@ local tableinsert = table.insert
 
 -- // Silent Aim Vars
 getgenv().Aiming = {
-    Enabled = true,
-    ShowFOV = true,
+    Enabled = lib.flags.silaim,
+    ShowFOV = lib.flags.fovsize,  
     FOVSides = 12,
     FOVColour = Color3fromRGB(255, 255, 255),
     VisibleCheck = true,
-    FOV = 60,
+    FOV = lib.flags.fovsize,
     HitChance = 100,
     Selected = LocalPlayer,
     SelectedPart = nil,
@@ -407,60 +407,3 @@ Heartbeat:Connect(function()
 end)
 
 return Aiming
-
--- // Examples // --
-
---// Namecall Version // --
-
---[[
--- // Load Aiming Module
-local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefanuk12/ROBLOX/master/Universal/Aiming/Module.lua"))()
-
--- // Hook
-local __namecall
-__namecall = hookmetamethod(game, "__namecall", function(...)
-    -- // Vars
-    local args = {...}
-    local self = args[1]
-    local method = getnamecallmethod()
-
-    -- // Checks
-    if (method == "FireServer") then
-        if (self.Name == "RemoteNameHere") then
-            -- change args
-
-            -- // Return changed arguments
-            return __namecall(unpack(args))
-        end
-    end
-
-    -- // Return
-    return __namecall(...)
-end)
-]]--
-
--- // Index Version // --
-
---[[
--- // Load Aiming Module
-local Aiming = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stefanuk12/ROBLOX/master/Universal/Aiming/Module.lua"))()
-
--- // Hook
-local __index
-__index = hookmetamethod(game, "__index", function(t, k)
-    -- // Check if it trying to get our mouse's hit or target
-    if (t:IsA("Mouse") and (k == "Hit" or k == "Target")) then
-        -- // If we can use the silent aim
-        if (Aiming.Check()) then
-            -- // Vars
-            local TargetPart = Aiming.SelectedPart
-
-            -- // Return modded val
-            return (k == "Hit" and TargetPart.CFrame or TargetPart)
-        end
-    end
-
-    -- // Return
-    return __index(t, k)
-end)
-]]--
