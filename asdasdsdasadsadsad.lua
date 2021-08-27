@@ -44,7 +44,7 @@ getgenv().SilentAim = {
     HitChance = 100,
     Selected = LocalPlayer,
     SelectedPart = nil,
-        TargetPart = {"Head", "HumanoidRootPart", "UpperTorso", "LowerTorso"},
+        TargetPart = {"Head", "HumanoidRootPart", "UpperTorso", "LowerTorso","LeftFoot","LeftLowerLeg","LeftUpperLeg","RightFoot","RightLowerLeg","RightUpperLeg","LeftHand","LeftLowerArm","LeftUpperArm","RightHand","RightLowerArm","RightUpperArm"},
     Ignored = {
         Teams = {
             {
