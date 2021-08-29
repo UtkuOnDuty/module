@@ -1,4 +1,4 @@
-if getgenv().Streamproof then return getgenv().Streamproof end
+if getgenv().SilentAim then return getgenv().SilentAim end
 
 -- // Services
 local Players = game:GetService("Players")
@@ -34,7 +34,7 @@ local tableremove = table.remove
 local tableinsert = table.insert
 
 -- // Silent Aim Vars
-getgenv().Streamproof = {
+getgenv().SilentAim = {
     Enabled = true,
     ShowFOV = false,
     FOVSides = 12,
@@ -58,22 +58,22 @@ getgenv().Streamproof = {
         }
     }
 }
-local Streamproof = getgenv().Streamproof
+local SilentAim = getgenv().SilentAim
 
 -- // Show FOV
 local circle = Drawingnew("Circle")
 circle.Transparency = 1
 circle.Thickness = 2
-circle.Color = Streamproof.FOVColour
+circle.Color = SilentAim.FOVColour
 circle.Filled = false
-function Streamproof.UpdateFOV()
+function SilentAim.UpdateFOV()
     if (circle) then
         -- // Set Circle Properties
-        circle.Visible = Streamproof.ShowFOV
-        circle.Radius = (Streamproof.FOV * 3)
+        circle.Visible = SilentAim.ShowFOV
+        circle.Radius = (SilentAim.FOV * 3)
         circle.Position = Vector2new(Mouse.X, Mouse.Y + GetGuiInset(GuiService).Y)
-        circle.NumSides = Streamproof.FOVSides
-        circle.Color = Streamproof.FOVColour
+        circle.NumSides = SilentAim.FOVSides
+        circle.Color = SilentAim.FOVColour
 
         -- // Return circle
         return circle
@@ -88,7 +88,7 @@ local CalcChance = function(percentage)
 end
 
 -- // Customisable Checking Functions: Is a part visible
-function Streamproof.IsPartVisible(Part, PartDescendant)
+function SilentAim.IsPartVisible(Part, PartDescendant)
     -- // Vars
     local Character = LocalPlayer.Character or CharacterAddedWait(CharacterAdded)
     local Origin = CurrentCamera.CFrame.Position
@@ -116,9 +116,9 @@ function Streamproof.IsPartVisible(Part, PartDescendant)
 end
 
 -- // Ignore player
-function Streamproof.IgnorePlayer(Player)
+function SilentAim.IgnorePlayer(Player)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredPlayers = Ignored.Players
 
     -- // Find player in table
@@ -136,9 +136,9 @@ function Streamproof.IgnorePlayer(Player)
 end
 
 -- // Unignore Player
-function Streamproof.UnIgnorePlayer(Player)
+function SilentAim.UnIgnorePlayer(Player)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredPlayers = Ignored.Players
 
     -- // Find player in table
@@ -156,9 +156,9 @@ function Streamproof.UnIgnorePlayer(Player)
 end
 
 -- // Ignore team
-function Streamproof.IgnoreTeam(Team, TeamColor)
+function SilentAim.IgnoreTeam(Team, TeamColor)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredTeams = Ignored.Teams
 
     -- // Find team in table
@@ -176,9 +176,9 @@ function Streamproof.IgnoreTeam(Team, TeamColor)
 end
 
 -- // Unignore team
-function Streamproof.UnIgnoreTeam(Team, TeamColor)
+function SilentAim.UnIgnoreTeam(Team, TeamColor)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredTeams = Ignored.Teams
 
     -- // Find team in table
@@ -197,18 +197,18 @@ function Streamproof.UnIgnoreTeam(Team, TeamColor)
 end
 
 -- //  Toggle team check
-function Streamproof.TeamCheck(Toggle)
+function SilentAim.TeamCheck(Toggle)
     if (Toggle) then
-        return Streamproof.IgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
+        return SilentAim.IgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
     end
 
-    return Streamproof.UnIgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
+    return SilentAim.UnIgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
 end
 
 -- // Check teams
-function Streamproof.IsIgnoredTeam(Player)
+function SilentAim.IsIgnoredTeam(Player)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredTeams = Ignored.Teams
 
     -- // Check if team is ignored
@@ -225,9 +225,9 @@ function Streamproof.IsIgnoredTeam(Player)
 end
 
 -- // Check if player (and team) is ignored
-function Streamproof.IsIgnored(Player)
+function SilentAim.IsIgnored(Player)
     -- // Vars
-    local Ignored = Streamproof.Ignored
+    local Ignored = SilentAim.Ignored
     local IgnoredPlayers = Ignored.Players
 
     -- // Loop
@@ -248,11 +248,11 @@ function Streamproof.IsIgnored(Player)
     end
 
     -- // Team check
-    return Streamproof.IsIgnoredTeam(Player)
+    return SilentAim.IsIgnoredTeam(Player)
 end
 
 -- // Get the Direction, Normal and Material
-function Streamproof.Raycast(Origin, Destination, UnitMultiplier)
+function SilentAim.Raycast(Origin, Destination, UnitMultiplier)
     if (typeof(Origin) == "Vector3" and typeof(Destination) == "Vector3") then
         -- // Handling
         if (not UnitMultiplier) then UnitMultiplier = 1 end
@@ -274,13 +274,13 @@ function Streamproof.Raycast(Origin, Destination, UnitMultiplier)
 end
 
 -- // Get Character
-function Streamproof.Character(Player)
+function SilentAim.Character(Player)
     return Player.Character
 end
 
 -- // Check Health
-function Streamproof.CheckHealth(Player)
-    local Character = Streamproof.Character(Player)
+function SilentAim.CheckHealth(Player)
+    local Character = SilentAim.Character(Player)
     local Humanoid = FindFirstChildWhichIsA(Character, "Humanoid")
 
     local Health = (Humanoid and Humanoid.Health or 0)
@@ -288,14 +288,14 @@ function Streamproof.CheckHealth(Player)
 end
 
 -- // Check if silent aim can used
-function Streamproof.Check()
-    return (Streamproof.Enabled == true and Streamproof.Selected ~= LocalPlayer and Streamproof.SelectedPart ~= nil)
+function SilentAim.Check()
+    return (SilentAim.Enabled == true and SilentAim.Selected ~= LocalPlayer and SilentAim.SelectedPart ~= nil)
 end
-Streamproof.checkStreamproof = Streamproof.Check
+SilentAim.checkSilentAim = SilentAim.Check
 
 -- // Get Closest Target Part
-function Streamproof.GetClosestTargetPartToCursor(Character)
-    local TargetParts = Streamproof.TargetPart
+function SilentAim.GetClosestTargetPartToCursor(Character)
+    local TargetParts = SilentAim.TargetPart
 
     -- // Vars
     local ClosestPart = nil
@@ -355,17 +355,17 @@ function Streamproof.GetClosestTargetPartToCursor(Character)
 end
 
 -- // Silent Aim Function
-function Streamproof.GetClosestPlayerToCursor()
+function SilentAim.GetClosestPlayerToCursor()
     -- // Vars
     local TargetPart = nil
     local ClosestPlayer = nil
-    local Chance = CalcChance(Streamproof.HitChance)
+    local Chance = CalcChance(SilentAim.HitChance)
     local ShortestDistance = 1/0
 
     -- // Chance
     if (not Chance) then
-        Streamproof.Selected = LocalPlayer
-        Streamproof.SelectedPart = nil
+        SilentAim.Selected = LocalPlayer
+        SilentAim.SelectedPart = nil
 
         return LocalPlayer
     end
@@ -374,17 +374,17 @@ function Streamproof.GetClosestPlayerToCursor()
     local AllPlayers = GetPlayers(Players)
     for i = 1, #AllPlayers do
         local Player = AllPlayers[i]
-        local Character = Streamproof.Character(Player)
+        local Character = SilentAim.Character(Player)
 
-        if (Streamproof.IsIgnored(Player) == false and Character) then
-            local TargetPartTemp, _, _, Magnitude = Streamproof.GetClosestTargetPartToCursor(Character)
+        if (SilentAim.IsIgnored(Player) == false and Character) then
+            local TargetPartTemp, _, _, Magnitude = SilentAim.GetClosestTargetPartToCursor(Character)
 
             -- // Check if part exists and health
-            if (TargetPartTemp and Streamproof.CheckHealth(Player)) then
+            if (TargetPartTemp and SilentAim.CheckHealth(Player)) then
                 -- // Check if is in FOV
                 if (circle.Radius > Magnitude and Magnitude < ShortestDistance) then
                     -- // Check if Visible
-                    if (Streamproof.VisibleCheck and not Streamproof.IsPartVisible(TargetPartTemp, Character)) then continue end
+                    if (SilentAim.VisibleCheck and not SilentAim.IsPartVisible(TargetPartTemp, Character)) then continue end
 
                     -- // Set vars
                     ClosestPlayer = Player
@@ -396,14 +396,14 @@ function Streamproof.GetClosestPlayerToCursor()
     end
 
     -- // End
-    Streamproof.Selected = ClosestPlayer
-    Streamproof.SelectedPart = TargetPart
+    SilentAim.Selected = ClosestPlayer
+    SilentAim.SelectedPart = TargetPart
 end
 
 -- // Heartbeat Function
 Heartbeat:Connect(function()
-    Streamproof.UpdateFOV()
-    Streamproof.GetClosestPlayerToCursor()
+    SilentAim.UpdateFOV()
+    SilentAim.GetClosestPlayerToCursor()
 end)
 
-return Streamproof
+return SilentAim
