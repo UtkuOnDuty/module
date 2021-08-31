@@ -69,7 +69,7 @@ circle.Filled = false
 function SilentAim.UpdateFOV()
     if (circle) then
         -- // Set Circle Properties
-        circle.Visible = SilentAim.ShowFOV
+        circle.Visible = kittenassist.ShowFov or SilentAim.ShowFOV
         circle.Radius = (SilentAim.FOV * 3)
         circle.Position = Vector2new(Mouse.X, Mouse.Y + GetGuiInset(GuiService).Y)
         circle.NumSides = SilentAim.FOVSides
